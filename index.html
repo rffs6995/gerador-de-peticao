@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Petição</title>
+  <style>
+    body {
+      font-family: Courier New, monospace;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    input, textarea, button {
+      font-family: inherit;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      width: 100%;
+      max-width: 500px;
+    }
+    #output {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gerador de Petição</h1>
+
+  <label>Parte Autora:</label>
+  <input type="text" id="autora" placeholder="Ex: João da Silva"/>
+
+  <label>Parte Ré:</label>
+  <input type="text" id="re" placeholder="Ex: Empresa XYZ Ltda."/>
+
+  <label>Valor da Causa (R$):</label>
+  <input type="text" id="valor" placeholder="Ex: 10.000,00"/>
+
+  <label>Assunto:</label>
+  <input type="text" id="assunto" placeholder="Ex: Cobrança indevida"/>
+
+  <button onclick="gerarPeticao()">Gerar Petição</button>
+
+  <div id="output"></div>
+
+  <script>
+    function gerarPeticao() {
+      const autora = document.getElementById('autora').value;
+      const re = document.getElementById('re').value;
+      const valor = document.getElementById('valor').value;
+      const assunto = document.getElementById('assunto').value;
+
+      const texto = `
+Excelentíssimo Senhor Doutor Juiz de Direito da ___ Vara Cível
+
+${autora}, por seu advogado (instrumento de mandato anexo), vem, respeitosamente, à presença de Vossa Excelência propor a presente
+
+AÇÃO DE ${assunto.toUpperCase()}
+
+em face de ${re}, pelos motivos de fato e de direito a seguir expostos:
+
+I – DOS FATOS
+
+A parte autora foi lesada em seus direitos, conforme se demonstrará adiante.
+
+II – DO DIREITO
+
+A demanda encontra amparo no ordenamento jurídico pátrio.
+
+III – DOS PEDIDOS
+
+Diante do exposto, requer:
+
+1. A citação da parte ré;
+2. A procedência do pedido;
+3. A condenação ao pagamento de R$ ${valor};
+
+Nestes termos,
+Pede deferimento.
+
+[Local], [Data].
+___________________________________
+ADVOGADO – OAB/UF 000000
+      `;
+
+      document.getElementById('output').textContent = texto;
+    }
+  </script>
+
+</body>
+</html>
