@@ -10,7 +10,7 @@
       padding: 2rem;
       background-color: #f4f4f4;
     }
-    input, textarea, button {
+    input, select, textarea, button {
       font-family: inherit;
       font-size: 1rem;
       margin: 0.5rem 0;
@@ -40,8 +40,11 @@
   <label>Valor da Causa (R$):</label>
   <input type="text" id="valor" placeholder="Ex: 10.000,00"/>
 
-  <label>Assunto:</label>
-  <input type="text" id="assunto" placeholder="Ex: Cobrança indevida"/>
+  <label>Tipo de Vício do Negócio Jurídico:</label>
+  <select id="tipo">
+    <option value="nulidade">Nulidade</option>
+    <option value="anulabilidade">Anulabilidade</option>
+  </select>
 
   <button onclick="gerarPeticao()">Gerar Petição</button>
 
@@ -52,32 +55,43 @@
       const autora = document.getElementById('autora').value;
       const re = document.getElementById('re').value;
       const valor = document.getElementById('valor').value;
-      const assunto = document.getElementById('assunto').value;
+      const tipo = document.getElementById('tipo').value;
+
+      let fundamentacao = "";
+      let tituloAcao = "";
+
+      if (tipo === "nulidade") {
+        tituloAcao = "AÇÃO DECLARATÓRIA DE NULIDADE DE CONTRATO";
+        fundamentacao = `Nos termos do artigo 166 do Código Civil, o negócio jurídico praticado possui vício insanável que o torna nulo de pleno direito, sendo, portanto, ineficaz desde sua origem.`;
+      } else {
+        tituloAcao = "AÇÃO ANULATÓRIA DE CONTRATO";
+        fundamentacao = `Nos termos do artigo 171 do Código Civil, o negócio jurídico celebrado apresenta vício que o torna anulável, sendo necessária a decretação de sua invalidade mediante ação própria.`;
+      }
 
       const texto = `
 Excelentíssimo Senhor Doutor Juiz de Direito da ___ Vara Cível
 
 ${autora}, por seu advogado (instrumento de mandato anexo), vem, respeitosamente, à presença de Vossa Excelência propor a presente
 
-AÇÃO DE ${assunto.toUpperCase()}
+${tituloAcao}
 
 em face de ${re}, pelos motivos de fato e de direito a seguir expostos:
 
 I – DOS FATOS
 
-A parte autora foi lesada em seus direitos, conforme se demonstrará adiante.
+A parte autora firmou contrato com a parte ré, o qual apresenta vício jurídico que compromete sua validade.
 
 II – DO DIREITO
 
-A demanda encontra amparo no ordenamento jurídico pátrio.
+${fundamentacao}
 
 III – DOS PEDIDOS
 
 Diante do exposto, requer:
 
 1. A citação da parte ré;
-2. A procedência do pedido;
-3. A condenação ao pagamento de R$ ${valor};
+2. O reconhecimento judicial da ${tipo === "nulidade" ? "nulidade" : "anulabilidade"} do contrato firmado;
+3. A condenação da parte ré ao pagamento de R$ ${valor}, a título de restituição integral;
 
 Nestes termos,
 Pede deferimento.
