@@ -29,10 +29,13 @@
 </head>
 <body>
 
-  <h1>Gerador de Nota Promissória</h1>
+  <h1>Gerador de Nota Promissória (LUG)</h1>
 
   <label>Nome do Emitente:</label>
   <input type="text" id="emitente" placeholder="Ex: João da Silva"/>
+
+  <label>CPF do Emitente:</label>
+  <input type="text" id="cpf" placeholder="Ex: 123.456.789-00"/>
 
   <label>Nome do Beneficiário:</label>
   <input type="text" id="beneficiario" placeholder="Ex: Maria Oliveira"/>
@@ -44,7 +47,13 @@
   <input type="text" id="vencimento" placeholder="Ex: 31/12/2025"/>
 
   <label>Local de Pagamento:</label>
-  <input type="text" id="local" placeholder="Ex: São Paulo/SP"/>
+  <input type="text" id="localPagamento" placeholder="Ex: São Paulo/SP"/>
+
+  <label>Local de Emissão:</label>
+  <input type="text" id="localEmissao" placeholder="Ex: Campinas/SP"/>
+
+  <label>Data de Emissão:</label>
+  <input type="text" id="dataEmissao" placeholder="Ex: 07/05/2025"/>
 
   <button onclick="gerarNota()">Gerar Nota Promissória</button>
 
@@ -53,26 +62,40 @@
   <script>
     function gerarNota() {
       const emitente = document.getElementById('emitente').value;
+      const cpf = document.getElementById('cpf').value;
       const beneficiario = document.getElementById('beneficiario').value;
       const valor = document.getElementById('valor').value;
       const vencimento = document.getElementById('vencimento').value;
-      const local = document.getElementById('local').value;
+      const localPagamento = document.getElementById('localPagamento').value;
+      const localEmissao = document.getElementById('localEmissao').value;
+      const dataEmissao = document.getElementById('dataEmissao').value;
 
       const texto = `
 NOTA PROMISSÓRIA
 
-Valor: R$ ${valor}
+No valor de R$ ${valor}
 Vencimento: ${vencimento}
-Local de pagamento: ${local}
+Local de pagamento: ${localPagamento}
 
-Pelo presente título, prometo pagar a ${beneficiario}, ou à sua ordem, a quantia de R$ ${valor} (valor por extenso), no dia ${vencimento}, no local acima indicado, referente a obrigação assumida nesta data.
+Pelo presente título, que contém a denominação "nota promissória", prometo pagar, de forma pura e simples, a ${beneficiario}, ou à sua ordem, a quantia de R$ ${valor} (valor por extenso), na data acima indicada, no local determinado para o pagamento.
 
-${local}, [Data atual].
+Emitente: ${emitente}
+CPF: ${cpf}
+
+Emitida em: ${localEmissao}, ${dataEmissao}
 
 ___________________________________
-${emitente}
-CPF: _____________________________
 Assinatura do Emitente
+
+Testemunhas:
+
+1. _____________________________________
+   Nome: _______________________________
+   CPF: ________________________________
+
+2. _____________________________________
+   Nome: _______________________________
+   CPF: ________________________________
       `;
 
       document.getElementById('output').textContent = texto;
