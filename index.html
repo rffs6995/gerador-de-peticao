@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerador de Petição</title>
+  <title>Gerador de Nota Promissória</title>
   <style>
     body {
       font-family: Courier New, monospace;
       padding: 2rem;
       background-color: #f4f4f4;
     }
-    input, select, textarea, button {
+    input, textarea, button {
       font-family: inherit;
       font-size: 1rem;
       margin: 0.5rem 0;
@@ -29,76 +29,50 @@
 </head>
 <body>
 
-  <h1>Gerador de Petição</h1>
+  <h1>Gerador de Nota Promissória</h1>
 
-  <label>Parte Autora:</label>
-  <input type="text" id="autora" placeholder="Ex: João da Silva"/>
+  <label>Nome do Emitente:</label>
+  <input type="text" id="emitente" placeholder="Ex: João da Silva"/>
 
-  <label>Parte Ré:</label>
-  <input type="text" id="re" placeholder="Ex: Empresa XYZ Ltda."/>
+  <label>Nome do Beneficiário:</label>
+  <input type="text" id="beneficiario" placeholder="Ex: Maria Oliveira"/>
 
-  <label>Valor da Causa (R$):</label>
-  <input type="text" id="valor" placeholder="Ex: 10.000,00"/>
+  <label>Valor (R$):</label>
+  <input type="text" id="valor" placeholder="Ex: 5.000,00"/>
 
-  <label>Tipo de Vício do Negócio Jurídico:</label>
-  <select id="tipo">
-    <option value="nulidade">Nulidade</option>
-    <option value="anulabilidade">Anulabilidade</option>
-  </select>
+  <label>Data de Vencimento:</label>
+  <input type="text" id="vencimento" placeholder="Ex: 31/12/2025"/>
 
-  <button onclick="gerarPeticao()">Gerar Petição</button>
+  <label>Local de Pagamento:</label>
+  <input type="text" id="local" placeholder="Ex: São Paulo/SP"/>
+
+  <button onclick="gerarNota()">Gerar Nota Promissória</button>
 
   <div id="output"></div>
 
   <script>
-    function gerarPeticao() {
-      const autora = document.getElementById('autora').value;
-      const re = document.getElementById('re').value;
+    function gerarNota() {
+      const emitente = document.getElementById('emitente').value;
+      const beneficiario = document.getElementById('beneficiario').value;
       const valor = document.getElementById('valor').value;
-      const tipo = document.getElementById('tipo').value;
-
-      let fundamentacao = "";
-      let tituloAcao = "";
-
-      if (tipo === "nulidade") {
-        tituloAcao = "AÇÃO DECLARATÓRIA DE NULIDADE DE CONTRATO";
-        fundamentacao = `Nos termos do artigo 166 do Código Civil, o negócio jurídico praticado possui vício insanável que o torna nulo de pleno direito, sendo, portanto, ineficaz desde sua origem.`;
-      } else {
-        tituloAcao = "AÇÃO ANULATÓRIA DE CONTRATO";
-        fundamentacao = `Nos termos do artigo 171 do Código Civil, o negócio jurídico celebrado apresenta vício que o torna anulável, sendo necessária a decretação de sua invalidade mediante ação própria.`;
-      }
+      const vencimento = document.getElementById('vencimento').value;
+      const local = document.getElementById('local').value;
 
       const texto = `
-Excelentíssimo Senhor Doutor Juiz de Direito da ___ Vara Cível
+NOTA PROMISSÓRIA
 
-${autora}, por seu advogado (instrumento de mandato anexo), vem, respeitosamente, à presença de Vossa Excelência propor a presente
+Valor: R$ ${valor}
+Vencimento: ${vencimento}
+Local de pagamento: ${local}
 
-${tituloAcao}
+Pelo presente título, prometo pagar a ${beneficiario}, ou à sua ordem, a quantia de R$ ${valor} (valor por extenso), no dia ${vencimento}, no local acima indicado, referente a obrigação assumida nesta data.
 
-em face de ${re}, pelos motivos de fato e de direito a seguir expostos:
+${local}, [Data atual].
 
-I – DOS FATOS
-
-A parte autora firmou contrato com a parte ré, o qual apresenta vício jurídico que compromete sua validade.
-
-II – DO DIREITO
-
-${fundamentacao}
-
-III – DOS PEDIDOS
-
-Diante do exposto, requer:
-
-1. A citação da parte ré;
-2. O reconhecimento judicial da ${tipo === "nulidade" ? "nulidade" : "anulabilidade"} do contrato firmado;
-3. A condenação da parte ré ao pagamento de R$ ${valor}, a título de restituição integral;
-
-Nestes termos,
-Pede deferimento.
-
-[Local], [Data].
 ___________________________________
-ADVOGADO – OAB/UF 000000
+${emitente}
+CPF: _____________________________
+Assinatura do Emitente
       `;
 
       document.getElementById('output').textContent = texto;
